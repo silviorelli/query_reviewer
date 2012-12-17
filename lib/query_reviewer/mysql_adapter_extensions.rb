@@ -40,7 +40,7 @@ module QueryReviewer
     def select_with_review(sql, *args)
       return select_without_review(sql, *args) unless query_reviewer_enabled?
 
-      sql.gsub!(/^SELECT /i, "SELECT SQL_NO_CACHE ") if QueryReviewer::CONFIGURATION["disable_sql_cache"]
+      sql.gsub!(/^SELECT /i, " SELECT SQL_NO_CACHE ") if QueryReviewer::CONFIGURATION["disable_sql_cache"]
       QueryReviewer.safe_log { execute("SET PROFILING=1") } if QueryReviewer::CONFIGURATION["profiling"]
       t1 = Time.now
       query_results = select_without_review(sql, *args)
